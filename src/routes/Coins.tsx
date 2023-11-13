@@ -1,15 +1,13 @@
-import { log } from "console";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import LoadingBox from "../components/LoadingAnimation";
 import LoadingAnimation from "../components/LoadingAnimation";
+import coinsData from "../data/coinsData.json";
 
 const Container = styled.div`
-  height: 100vh;
-  max-width: 500px;
+  max-width: 700px;
   padding: 0px 10px;
-  margin: 0 auto;
+  margin: 50px auto 0px auto;
 `;
 
 const Header = styled.header`
@@ -25,14 +23,19 @@ const Title = styled.h1`
   color: ${(props) => props.theme.accentColor};
 `;
 
-const CoinsList = styled.ul``;
+const CoinsList = styled.ul`
+  list-style-type: none;
+`;
 
 const Coin = styled.li`
   background-color: ${(props) => props.theme.textColor};
   color: ${(props) => props.theme.bgColor};
   margin-bottom: 10px;
-  font-size: 48px;
+  font-size: 36px;
   border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 
   a {
     display: flex;
@@ -45,7 +48,7 @@ const Coin = styled.li`
 const Img = styled.img`
   width: 35px;
   height: 35px;
-  margin-right: 10px;
+  margin: 0px 10px;
 `;
 
 interface RouteParams {
@@ -66,13 +69,16 @@ const Coins = () => {
   const [coins, setCoins] = useState<CoinInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const coinData = async () => {
+  useEffect(() => {
+    getCoinsData();
+  }, []);
+
+  const getCoinsData = async () => {
     try {
-      const response = await fetch(
-        "https://proxy.cors.sh/https://api.coinpaprika.com/v1/coins"
-      );
-      const json = await response.json();
-      setCoins(json.slice(0, 100));
+      //const response = await fetch("https://api.coinpaprika.com/v1/coins");
+      //const json = await response.json();
+      const json: CoinInterface[] = Object.values(coinsData);
+      setCoins(json.slice(0, 200));
     } catch (error) {
       const errorDummy = [
         {
@@ -91,10 +97,6 @@ const Coins = () => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    coinData();
-  }, []);
-
   return (
     <Container>
       <Header>
@@ -107,8 +109,9 @@ const Coins = () => {
           {coins.map((coin) => (
             <Coin key={coin.id}>
               <Link to={`/${coin.id}`}>
+                {coin.rank}{" "}
                 <Img
-                  src={`https://coinicons-api.vercel.app/${coin.symbol.toLowerCase()}`}
+                  src={`https://cryptocurrencyliveprices.com/img/${coin.id}.png`}
                   alt="coin img"
                 />
                 {coin.name} &rarr;
