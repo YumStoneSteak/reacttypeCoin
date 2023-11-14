@@ -6,9 +6,7 @@ export const reset = css`
    License: none (public domain)
 */
 
-  @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap");
-  font-family: "Source Sans Pro", sans-serif;
-
+  font-family: "Source Sans 3", sans-serif;
   * {
     box-sizing: border-box;
   }
@@ -123,9 +121,9 @@ export const reset = css`
     display: none;
   }
   body {
-    line-height: 1;
     background-color: ${(props) => props.theme.bgColor};
     color: ${(props) => props.theme.textColor};
+    line-height: 1;
   }
   menu ol,
   ul {

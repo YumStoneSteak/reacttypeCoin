@@ -6,21 +6,21 @@ import coinsData from "../data/coinsData.json";
 
 const Container = styled.div`
   max-width: 700px;
-  padding: 0px 10px;
   margin: 50px auto 0px auto;
+  padding: 0px 10px;
 `;
 
 const Header = styled.header`
-  height: 15vh;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  height: 15vh;
 `;
 
 const Title = styled.h1`
+  color: ${(props) => props.theme.accentColor};
   font-size: 48px;
   font-weight: bold;
-  color: ${(props) => props.theme.accentColor};
 `;
 
 const CoinsList = styled.ul`
@@ -30,18 +30,18 @@ const CoinsList = styled.ul`
 const Coin = styled.li`
   background-color: ${(props) => props.theme.textColor};
   color: ${(props) => props.theme.bgColor};
-  margin-bottom: 10px;
-  font-size: 36px;
-  border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  margin-bottom: 10px;
+  font-size: 36px;
+  border-radius: 15px;
+  transition: color 0.2s ease-in;
 
   a {
     display: flex;
     align-items: center;
     padding: 20px;
-    transition: color 0.2s ease-in;
   }
 `;
 
@@ -108,7 +108,7 @@ const Coins = () => {
         <CoinsList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>
+              <Link to={`/${coin.id}/chart`}>
                 {coin.rank}{" "}
                 <Img
                   src={`https://cryptocurrencyliveprices.com/img/${coin.id}.png`}

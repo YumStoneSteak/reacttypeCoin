@@ -1,43 +1,54 @@
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
-const LoadingAnimation = () => {
-  const LoaderContainer = styled.div`
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 50%; /* 상단에서 50% 위치 */
-    left: 50%; /* 좌측에서 50% 위치 */
-    transform: translate(-50%, -50%); /* 정중앙에 위치 */
+const LoaderContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
 
-    div {
-      margin-top: 20px;
-    }
-  `;
-
-  const ani = keyframes`
-    from{
-      transform: rotate(0deg);
-      border-radius: 0px;
-    }
-    50%{
-      border-radius: 25px;
-    }
-    to {  
-      transform: rotate(360deg);
-      border-radius: 0px;
-    }
+  div {
+    margin-top: 20px;
+  }
 `;
 
-  const LoadingBox = styled.div`
-    height: 50px;
-    width: 50px;
+// props를 받아 keyframes를 생성하는 함수
+const Animation = (accentColor: string) => keyframes`
+  0% {
+    transform: rotate(0deg);
+    opacity: 1;
     background-color: gray;
-    animation: ${ani} 1s linear infinite;
-  `;
+    border-radius: 0px;
+  }
+  50% {
+    transform: rotate(180deg);
+    opacity: 0.5;
+    background-color: ${accentColor};
+    border-radius: 25px;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 1;
+    background-color: gray;
+    border-radius: 0px;
+  }
+`;
 
+// props.theme.accentColor를 사용하여 애니메이션을 생성
+const LoadingBox = styled.div`
+  height: 50px;
+  width: 50px;
+  animation: ${(props) =>
+    css`
+      ${Animation(props.theme.accentColor)} 1s linear infinite
+    `};
+`;
+
+const LoadingAnimation = () => {
   return (
     <LoaderContainer>
       <LoadingBox />

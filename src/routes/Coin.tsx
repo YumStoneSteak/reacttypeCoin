@@ -1,28 +1,31 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Outlet, Route, Routes, useMatch, useParams } from "react-router-dom";
 import styled from "styled-components";
 import LoadingAnimation from "../components/LoadingAnimation";
 import btcData from "../data/btcData.json";
 import ICoinInfo from "../interface/ICoinInfo";
 import ICoinPrice from "../interface/ICoinPrice";
+import Price from "./Price";
+import Chart from "./Chart";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   max-width: 700px;
-  padding: 0px 10px;
   margin: 50px auto 0px auto;
+  padding: 0px 10px;
 `;
 
 const Header = styled.header`
-  height: 15vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 15vh;
 `;
 
 const Title = styled.h1`
+  color: ${(props) => props.theme.accentColor};
   font-size: 48px;
   font-weight: bold;
-  color: ${(props) => props.theme.accentColor};
 `;
 
 const CoinsList = styled.ul`
@@ -48,16 +51,49 @@ const OverviewItem = styled.div`
   flex-direction: column;
   align-items: center;
   font-size: 25px;
+
   span:first-child {
+    margin-bottom: 5px;
     font-size: 15px;
     font-weight: 400;
     text-transform: uppercase;
-    margin-bottom: 5px;
   }
 `;
 
 const Description = styled.p`
   margin: 20px 0px;
+`;
+
+const Tabs = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  margin: 20px 0px;
+`;
+
+const LinkTab = styled(Link)<{ isActive: boolean }>`
+  display: block;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  font-size: 25px;
+  font-weight: 400;
+  text-transform: uppercase;
+  padding: 10px 0px;
+  width: 50%;
+  color: ${(props) =>
+    props.isActive ? props.theme.accentColor : props.theme.textColor};
+  text-decoration: none;
+  margin-right: 20px;
+
+  &:hover {
+    color: ${(props) => props.theme.accentColor};
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
 `;
 
 interface RouteParams {
@@ -79,7 +115,9 @@ const Coin = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [info, setInfo] = useState<ICoinInfo>();
   const [priceInfo, setPriceInfo] = useState<undefined | ICoinPrice[]>();
-
+  const isChartTap = useMatch("/:coinId/chart");
+  const isPriceTap = useMatch("/:coinId/price");
+  console.log("isChartTap", isChartTap);
   useEffect(() => {
     getCoinData();
   }, []);
@@ -156,6 +194,18 @@ const Coin = () => {
               <span>{priceInfo?.[0]?.low}</span>
             </OverviewItem>
           </Overview>
+
+          <Tabs>
+            <LinkTab to={`/${coinId}/chart`} isActive={!!isChartTap}>
+              Chart
+            </LinkTab>
+            <LinkTab to={`/${coinId}/price`} isActive={!!isPriceTap}>
+              Price
+            </LinkTab>
+          </Tabs>
+
+          {/* Nested Routing */}
+          <Outlet />
         </>
       )}
     </Container>
