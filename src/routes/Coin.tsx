@@ -117,7 +117,7 @@ const Coin = () => {
   const [priceInfo, setPriceInfo] = useState<undefined | ICoinPrice[]>();
   const isChartTap = useMatch("/:coinId/chart");
   const isPriceTap = useMatch("/:coinId/price");
-  console.log("isChartTap", isChartTap);
+
   useEffect(() => {
     getCoinData();
   }, []);
@@ -154,6 +154,8 @@ const Coin = () => {
     }
   };
 
+  const OverviewPriceItems: string[] = ["open", "close", "high", "low"];
+
   return (
     <Container>
       <Header>
@@ -162,37 +164,35 @@ const Coin = () => {
             src={`https://cryptocurrencyliveprices.com/img/${coinId}.png`}
             alt="coin img"
           />
-          {info?.name ?? "404 error"}
+          {coinId.split("-")[1].toUpperCase() ?? "404 error"}
         </Title>
       </Header>
       {loading ? (
-        <LoadingAnimation />
+        <LoadingAnimation msg="loading..." />
       ) : (
         <>
           <Overview>
             <OverviewItem>
-              <span>Rank:</span>
+              <span>Rank</span>
               <span>{info?.rank}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Symbol:</span>
+              <span>Symbol</span>
               <span>${info?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open Source:</span>
+              <span>Open Source</span>
               <span>{info?.open_source ? "Yes" : "No"}</span>
             </OverviewItem>
           </Overview>
           <Description>{info?.description}</Description>
           <Overview>
-            <OverviewItem>
-              <span>high:</span>
-              <span>{priceInfo?.[0]?.high}</span>
-            </OverviewItem>
-            <OverviewItem>
-              <span>low:</span>
-              <span>{priceInfo?.[0]?.low}</span>
-            </OverviewItem>
+            {OverviewPriceItems.map((item) => (
+              <OverviewItem>
+                <span>{item}</span>
+                <span>{priceInfo?.[0]?.[item] ?? "N/A"}</span>
+              </OverviewItem>
+            ))}
           </Overview>
 
           <Tabs>

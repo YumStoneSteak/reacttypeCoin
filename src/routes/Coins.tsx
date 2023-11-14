@@ -103,7 +103,7 @@ const Coins = () => {
         <Title>Coins Currency</Title>
       </Header>
       {loading ? (
-        <LoadingAnimation />
+        <LoadingAnimation msg="loading..." />
       ) : (
         <CoinsList>
           {coins.map((coin) => (

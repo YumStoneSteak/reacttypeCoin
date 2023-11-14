@@ -1,4 +1,5 @@
 export default interface ICoinData {
+  [key: string]: number | string;
   time_open: number;
   time_close: number;
   open: string;

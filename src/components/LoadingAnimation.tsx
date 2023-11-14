@@ -48,11 +48,11 @@ const LoadingBox = styled.div`
     `};
 `;
 
-const LoadingAnimation = () => {
+const LoadingAnimation = ({ msg }: { msg: string }) => {
   return (
     <LoaderContainer>
       <LoadingBox />
-      <div>loading...</div>
+      <div>{msg}</div>
     </LoaderContainer>
   );
 };
