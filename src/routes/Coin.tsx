@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { Outlet, Route, Routes, useMatch, useParams } from "react-router-dom";
+import { Outlet, useMatch, useParams } from "react-router-dom";
 import styled from "styled-components";
 import LoadingAnimation from "../components/LoadingAnimation";
-import btcData from "../data/btcData.json";
 import ICoinInfo from "../interface/ICoinInfo";
 import ICoinPrice from "../interface/ICoinPrice";
 import Price from "./Price";
-import Chart from "./Chart";
+import Chart from "./ChartTab";
 import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
+import { fetchCoinInfo, fetchCoinPrice } from "../api/api";
+import ChartTab from "./ChartTab";
 
 const Container = styled.div`
   max-width: 700px;
@@ -25,11 +27,6 @@ const Header = styled.header`
 const Title = styled.h1`
   color: ${(props) => props.theme.accentColor};
   font-size: 48px;
-  font-weight: bold;
-`;
-
-const CoinsList = styled.ul`
-  list-style-type: none;
 `;
 
 const Img = styled.img`
@@ -100,59 +97,20 @@ interface RouteParams {
   coinId: string;
 }
 
-interface CoinInterface {
-  id: string;
-  name: string;
-  symbol: string;
-  rank: number;
-  is_new: boolean;
-  is_active: boolean;
-  type: string;
-}
-
 const Coin = () => {
   const { coinId } = useParams() as unknown as RouteParams;
-  const [loading, setLoading] = useState<boolean>(true);
-  const [info, setInfo] = useState<ICoinInfo>();
-  const [priceInfo, setPriceInfo] = useState<undefined | ICoinPrice[]>();
+
   const isChartTap = useMatch("/:coinId/chart");
   const isPriceTap = useMatch("/:coinId/price");
 
-  useEffect(() => {
-    getCoinData();
-  }, []);
-
-  const getCoinData = async () => {
-    try {
-      // const infoData = await (
-      //   await fetch("https://api.coinpaprika.com/v1/coins/btc-bitcoin")
-      // ).json();
-      setInfo(btcData);
-
-      const priceData = await (
-        await fetch(
-          `https://ohlcv-api.nomadcoders.workers.dev?coinId=${coinId}`
-        )
-      ).json();
-      setPriceInfo(priceData);
-
-      setLoading(false);
-    } catch (error) {
-      const priceError = [
-        {
-          time_open: 0,
-          time_close: 0,
-          open: "error",
-          high: "error",
-          low: "error",
-          close: "error",
-          volume: "error",
-          market_cap: 0,
-        },
-      ];
-      setPriceInfo(priceError);
-    }
-  };
+  const { isLoading: isLoadingInfo, data: infoData } = useQuery(
+    ["fetchCoinInfo", coinId],
+    () => fetchCoinInfo(coinId)
+  );
+  const { isLoading: isLoadingPrice, data: priceData } = useQuery(
+    ["fetchCoinPrice", coinId],
+    () => fetchCoinPrice(coinId)
+  );
 
   const OverviewPriceItems: string[] = ["open", "close", "high", "low"];
 
@@ -167,34 +125,33 @@ const Coin = () => {
           {coinId.split("-")[1].toUpperCase() ?? "404 error"}
         </Title>
       </Header>
-      {loading ? (
+      {isLoadingInfo || isLoadingPrice ? (
         <LoadingAnimation msg="loading..." />
       ) : (
         <>
           <Overview>
             <OverviewItem>
               <span>Rank</span>
-              <span>{info?.rank}</span>
+              <span>{infoData?.rank}</span>
             </OverviewItem>
             <OverviewItem>
               <span>Symbol</span>
-              <span>${info?.symbol}</span>
+              <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
               <span>Open Source</span>
-              <span>{info?.open_source ? "Yes" : "No"}</span>
+              <span>{infoData?.open_source ? "Yes" : "No"}</span>
             </OverviewItem>
           </Overview>
-          <Description>{info?.description}</Description>
+          <Description>{infoData?.description}</Description>
           <Overview>
-            {OverviewPriceItems.map((item) => (
-              <OverviewItem>
+            {OverviewPriceItems.map((item, index) => (
+              <OverviewItem key={index}>
                 <span>{item}</span>
-                <span>{priceInfo?.[0]?.[item] ?? "N/A"}</span>
+                <span>{priceData?.[0]?.[item] ?? "N/A"}</span>
               </OverviewItem>
             ))}
           </Overview>
-
           <Tabs>
             <LinkTab to={`/${coinId}/chart`} isActive={!!isChartTap}>
               Chart

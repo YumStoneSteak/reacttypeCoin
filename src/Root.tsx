@@ -1,12 +1,13 @@
 import { Outlet } from "react-router-dom";
-import GlobalStyle from "./style/GlobalStyle";
 import Nav from "./components/Nav";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 function Root() {
   return (
     <>
       <Nav />
       <Outlet />
+      <ReactQueryDevtools initialIsOpen={true} />
     </>
   );
 }

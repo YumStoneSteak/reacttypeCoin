@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import LoadingAnimation from "../components/LoadingAnimation";
 import coinsData from "../data/coinsData.json";
+import { useQuery } from "react-query";
+import { fetchAllCoins } from "../api/api";
 
 const Container = styled.div`
   max-width: 700px;
@@ -27,6 +29,15 @@ const CoinsList = styled.ul`
   list-style-type: none;
 `;
 
+const fadeIn = () => keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 const Coin = styled.li`
   background-color: ${(props) => props.theme.textColor};
   color: ${(props) => props.theme.bgColor};
@@ -36,7 +47,12 @@ const Coin = styled.li`
   margin-bottom: 10px;
   font-size: 36px;
   border-radius: 15px;
-  transition: color 0.2s ease-in;
+  opacity: 0;
+  animation: ${(props) =>
+    css`
+      ${fadeIn()} 700ms ease-in-out forwards
+    `};
+  transition: all 3s cubic-bezier(0.33, 1, 0.68, 1);
 
   a {
     display: flex;
@@ -51,11 +67,7 @@ const Img = styled.img`
   margin: 0px 10px;
 `;
 
-interface RouteParams {
-  coinId: string;
-}
-
-interface CoinInterface {
+interface ICoin {
   id: string;
   name: string;
   symbol: string;
@@ -65,36 +77,27 @@ interface CoinInterface {
   type: string;
 }
 
+const START_DATA_NUM = 0;
+const END_DATA_NUM = 100;
+
 const Coins = () => {
-  const [coins, setCoins] = useState<CoinInterface[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [coins, setCoins] = useState<ICoin[]>([]);
+
+  const { isLoading, data } = useQuery("fetchAllCoins", fetchAllCoins);
 
   useEffect(() => {
-    getCoinsData();
-  }, []);
+    if (data) {
+      data.slice(START_DATA_NUM, END_DATA_NUM).forEach((coin: ICoin) => {
+        preloadImage(`https://cryptocurrencyliveprices.com/img/${coin.id}.png`);
+      });
 
-  const getCoinsData = async () => {
-    try {
-      //const response = await fetch("https://api.coinpaprika.com/v1/coins");
-      //const json = await response.json();
-      const json: CoinInterface[] = Object.values(coinsData);
-      setCoins(json.slice(0, 200));
-    } catch (error) {
-      const errorDummy = [
-        {
-          id: "error",
-          name: "&rarr; error no data",
-          symbol: "error",
-          rank: 1,
-          is_new: true,
-          is_active: true,
-          type: "error",
-        },
-      ];
-      setCoins(errorDummy);
+      setCoins(data.slice(START_DATA_NUM, END_DATA_NUM));
     }
+  }, [data]);
 
-    setLoading(false);
+  const preloadImage = (src: string) => {
+    const img = new Image();
+    img.src = src;
   };
 
   return (
@@ -102,12 +105,17 @@ const Coins = () => {
       <Header>
         <Title>Coins Currency</Title>
       </Header>
-      {loading ? (
-        <LoadingAnimation msg="loading..." />
+      {isLoading ? (
+        <LoadingAnimation msg={"loading..."} />
       ) : (
         <CoinsList>
-          {coins.map((coin) => (
-            <Coin key={coin.id}>
+          {coins.map((coin, index) => (
+            <Coin
+              key={coin.id}
+              style={{
+                animationDelay: `${index * 50}ms`,
+              }}
+            >
               <Link to={`/${coin.id}/chart`}>
                 {coin.rank}{" "}
                 <Img

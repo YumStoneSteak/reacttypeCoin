@@ -1,4 +1,4 @@
-export default interface ICoinData {
+export default interface ICoinPrice {
   [key: string]: number | string;
   time_open: number;
   time_close: number;

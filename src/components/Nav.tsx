@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const Navi = styled.nav`
   position: fixed;
+  z-index: 100;
   top: 0px;
   width: 100%;
   padding: 10px;
