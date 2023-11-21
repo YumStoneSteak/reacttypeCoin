@@ -5,6 +5,7 @@ import LoadingAnimation from "../components/LoadingAnimation";
 import coinsData from "../data/coinsData.json";
 import { useQuery } from "react-query";
 import { fetchAllCoins } from "../api/api";
+import { Helmet } from "react-helmet";
 
 const Container = styled.div`
   max-width: 700px;
@@ -102,6 +103,9 @@ const Coins = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Coins</title>
+      </Helmet>
       <Header>
         <Title>Coins Currency</Title>
       </Header>

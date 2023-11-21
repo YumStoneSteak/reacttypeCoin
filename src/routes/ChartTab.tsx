@@ -4,6 +4,7 @@ import { fetchCoinPrice } from "../api/api";
 import ReactApexChart from "react-apexcharts";
 import { useParams } from "react-router-dom";
 import ICoinPrice from "../interface/ICoinPrice";
+import LoadingAnimation from "../components/LoadingAnimation";
 
 interface ICoin {
   id: string;
@@ -25,6 +26,7 @@ const ChartTab = () => {
   return (
     <div>
       {isLoading ? (
+        //<LoadingAnimation msg="loading chart" />
         "loading chart"
       ) : (
         <ReactApexChart
@@ -44,10 +46,12 @@ const ChartTab = () => {
             },
             xaxis: {
               categories: data?.map((price) => price.time_close),
+              type: "datetime",
             },
             theme: {
               mode: "dark",
             },
+            colors: ["#ff7b4f"],
             stroke: {
               curve: "smooth",
             },

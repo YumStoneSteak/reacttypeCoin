@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinPrice } from "../api/api";
 import ChartTab from "./ChartTab";
+import { Helmet } from "react-helmet";
 
 const Container = styled.div`
   max-width: 700px;
@@ -38,7 +39,7 @@ const Img = styled.img`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.bgAccentColor};
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -72,7 +73,7 @@ const Tabs = styled.div`
 
 const LinkTab = styled(Link)<{ isActive: boolean }>`
   display: block;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.bgAccentColor};
   border-radius: 10px;
   font-size: 25px;
   font-weight: 400;
@@ -99,7 +100,6 @@ interface RouteParams {
 
 const Coin = () => {
   const { coinId } = useParams() as unknown as RouteParams;
-
   const isChartTap = useMatch("/:coinId/chart");
   const isPriceTap = useMatch("/:coinId/price");
 
@@ -107,15 +107,32 @@ const Coin = () => {
     ["fetchCoinInfo", coinId],
     () => fetchCoinInfo(coinId)
   );
+
   const { isLoading: isLoadingPrice, data: priceData } = useQuery(
     ["fetchCoinPrice", coinId],
-    () => fetchCoinPrice(coinId)
+    () => fetchCoinPrice(coinId),
+    {
+      //refetchInterval: 5000,
+    }
   );
+
+  console.log("priceData", priceData);
 
   const OverviewPriceItems: string[] = ["open", "close", "high", "low"];
 
   return (
     <Container>
+      <Helmet>
+        <title>
+          {infoData?.name ? `Coin : ${infoData?.name}` : "loading..."}
+        </title>
+        <link
+          rel="icon"
+          type="image/png"
+          href={`https://cryptocurrencyliveprices.com/img/${coinId}.png`}
+          sizes="16x16"
+        />
+      </Helmet>
       <Header>
         <Title>
           <Img
@@ -136,11 +153,11 @@ const Coin = () => {
             </OverviewItem>
             <OverviewItem>
               <span>Symbol</span>
-              <span>${infoData?.symbol}</span>
+              <span>{infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open Source</span>
-              <span>{infoData?.open_source ? "Yes" : "No"}</span>
+              <span>Price</span>
+              <span>${priceData[0].open}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
@@ -148,7 +165,7 @@ const Coin = () => {
             {OverviewPriceItems.map((item, index) => (
               <OverviewItem key={index}>
                 <span>{item}</span>
-                <span>{priceData?.[0]?.[item] ?? "N/A"}</span>
+                {<span>{priceData?.[0][item] ?? "N/A"}</span>}
               </OverviewItem>
             ))}
           </Overview>
