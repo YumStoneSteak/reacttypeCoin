@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 import LoadingAnimation from "../components/LoadingAnimation";
-import coinsData from "../data/coinsData.json";
 import { useQuery } from "react-query";
 import { fetchAllCoins } from "../api/api";
 import { Helmet } from "react-helmet";
+import { fadeIn } from "../style/GlobalStyleComponents";
 
 const Container = styled.div`
   max-width: 700px;
@@ -30,18 +30,9 @@ const CoinsList = styled.ul`
   list-style-type: none;
 `;
 
-const fadeIn = () => keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
-
 const Coin = styled.li`
-  background-color: ${(props) => props.theme.textColor};
-  color: ${(props) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.bgAccentColor};
+  color: ${(props) => props.theme.textColor};
   display: flex;
   align-items: center;
   justify-content: flex-start;

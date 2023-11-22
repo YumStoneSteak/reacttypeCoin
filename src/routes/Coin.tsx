@@ -1,15 +1,10 @@
-import { useEffect, useState } from "react";
+
 import { Outlet, useMatch, useParams } from "react-router-dom";
 import styled from "styled-components";
 import LoadingAnimation from "../components/LoadingAnimation";
-import ICoinInfo from "../interface/ICoinInfo";
-import ICoinPrice from "../interface/ICoinPrice";
-import Price from "./Price";
-import Chart from "./ChartTab";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinPrice } from "../api/api";
-import ChartTab from "./ChartTab";
 import { Helmet } from "react-helmet";
 
 const Container = styled.div`
@@ -60,6 +55,9 @@ const OverviewItem = styled.div`
 
 const Description = styled.p`
   margin: 20px 0px;
+  background-color: ${(props) => props.theme.bgAccentColor};
+  padding: 20px 20px;
+  border-radius: 10px;
 `;
 
 const Tabs = styled.div`
@@ -103,12 +101,12 @@ const Coin = () => {
   const isChartTap = useMatch("/:coinId/chart");
   const isPriceTap = useMatch("/:coinId/price");
 
-  const { isLoading: isLoadingInfo, data: infoData } = useQuery(
+  const { isLoading: isLoadingInfo, data: infoData, error: infoError} = useQuery(
     ["fetchCoinInfo", coinId],
     () => fetchCoinInfo(coinId)
   );
 
-  const { isLoading: isLoadingPrice, data: priceData } = useQuery(
+  const { isLoading: isLoadingPrice, data: priceData, error: priceError } = useQuery(
     ["fetchCoinPrice", coinId],
     () => fetchCoinPrice(coinId),
     {
@@ -116,36 +114,43 @@ const Coin = () => {
     }
   );
 
-  console.log("priceData", priceData);
-
   const OverviewPriceItems: string[] = ["open", "close", "high", "low"];
+
+  let LoadingMSG = "";
+  if (isLoadingInfo || isLoadingPrice) {
+    LoadingMSG = "Loading...";
+  } else if (infoError) {
+    LoadingMSG = "Error occurred while fetching coin information.";
+  } else if (priceError) {
+    LoadingMSG = "Error occurred while fetching coin prices.";
+  }
 
   return (
     <Container>
-      <Helmet>
-        <title>
-          {infoData?.name ? `Coin : ${infoData?.name}` : "loading..."}
-        </title>
-        <link
-          rel="icon"
-          type="image/png"
-          href={`https://cryptocurrencyliveprices.com/img/${coinId}.png`}
-          sizes="16x16"
-        />
-      </Helmet>
-      <Header>
-        <Title>
-          <Img
-            src={`https://cryptocurrencyliveprices.com/img/${coinId}.png`}
-            alt="coin img"
-          />
-          {coinId.split("-")[1].toUpperCase() ?? "404 error"}
-        </Title>
-      </Header>
-      {isLoadingInfo || isLoadingPrice ? (
-        <LoadingAnimation msg="loading..." />
+      {isLoadingInfo || isLoadingPrice || infoError || priceError ? (
+        <LoadingAnimation msg={LoadingMSG} />
       ) : (
         <>
+          <Helmet>
+            <title>
+              {infoData?.name ? `Coin : ${infoData?.name}` : "loading..."}
+            </title>
+            <link
+              rel="icon"
+              type="image/png"
+              href={`https://cryptocurrencyliveprices.com/img/${coinId}.png`}
+              sizes="16x16"
+            />
+          </Helmet>
+          <Header>
+            <Title>
+              <Img
+                src={`https://cryptocurrencyliveprices.com/img/${coinId}.png`}
+                alt="coin img"
+              />
+              {coinId.split("-")[1].toUpperCase() ?? "404 error"}
+            </Title>
+          </Header>
           <Overview>
             <OverviewItem>
               <span>Rank</span>
@@ -157,7 +162,7 @@ const Coin = () => {
             </OverviewItem>
             <OverviewItem>
               <span>Price</span>
-              <span>${priceData[0].open}</span>
+              <span>${priceData[0]?.open ?? "N/A"}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>

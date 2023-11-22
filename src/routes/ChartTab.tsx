@@ -4,17 +4,8 @@ import { fetchCoinPrice } from "../api/api";
 import ReactApexChart from "react-apexcharts";
 import { useParams } from "react-router-dom";
 import ICoinPrice from "../interface/ICoinPrice";
-import LoadingAnimation from "../components/LoadingAnimation";
-
-interface ICoin {
-  id: string;
-  name: string;
-  symbol: string;
-  rank: number;
-  is_new: boolean;
-  is_active: boolean;
-  type: string;
-}
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../atom";
 
 const ChartTab = () => {
   const { coinId } = useParams();
@@ -22,6 +13,8 @@ const ChartTab = () => {
     ["fetchCoinPrice", coinId],
     () => fetchCoinPrice(coinId!)
   );
+
+  const isDarkTheme = useRecoilValue(isDarkAtom);
 
   return (
     <div>
@@ -49,7 +42,7 @@ const ChartTab = () => {
               type: "datetime",
             },
             theme: {
-              mode: "dark",
+              mode: isDarkTheme ? "dark" : "light",
             },
             colors: ["#ff7b4f"],
             stroke: {

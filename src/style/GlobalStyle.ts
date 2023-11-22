@@ -1,4 +1,5 @@
 import { createGlobalStyle, css } from "styled-components";
+import { fadeIn } from "./GlobalStyleComponents";
 
 export const reset = css`
   /* http://meyerweb.com/eric/tools/css/reset/
@@ -124,7 +125,9 @@ export const reset = css`
     background-color: ${(props) => props.theme.bgColor};
     color: ${(props) => props.theme.textColor};
     line-height: 1;
+    transition: background-color 0.7s cubic-bezier(0.33, 1, 0.68, 1);
   }
+
   menu ol,
   ul {
     list-style: none;
