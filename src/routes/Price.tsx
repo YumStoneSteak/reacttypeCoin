@@ -30,12 +30,18 @@ const PriceTab = () => {
         "loading Price"
       ) : (
         <ReactApexChart
-          type="line"
-          series={[
-            {
-              name: "data",
-              data: data?.map((price) => parseFloat(price.close)) as number[],
-            },
+          type="candlestick"
+          series= {[
+           {
+            name: "data",
+            data: data? data.map((price) => [
+              price.time_open, 
+              parseFloat(price.open),
+              parseFloat(price.high),
+              parseFloat(price.low),
+              parseFloat(price.close)
+            ]) : [],
+           }
           ]}
           options={{
             chart: {
@@ -43,6 +49,19 @@ const PriceTab = () => {
               width: 500,
               background: "transpatent",
               //toolbar: { show: false },
+              animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 800,
+                animateGradually: {
+                    enabled: true,
+                    delay: 150
+                },
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 350
+                }
+            }
             },
             xaxis: {
               categories: data?.map((price) => price.time_close),
@@ -54,7 +73,8 @@ const PriceTab = () => {
             colors: ["#ff7b4f"],
             stroke: {
               curve: "smooth",
-            },
+            }
+            
           }}
         />
       )}
