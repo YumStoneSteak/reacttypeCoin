@@ -1,20 +1,9 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { fetchCoinPrice } from "../api/api";
+import { fetchCoinPrice } from "../../api/api";
 import ReactApexChart from "react-apexcharts";
 import { useParams } from "react-router-dom";
-import ICoinPrice from "../interface/ICoinPrice";
-import LoadingAnimation from "../components/LoadingAnimation";
-
-interface ICoin {
-  id: string;
-  name: string;
-  symbol: string;
-  rank: number;
-  is_new: boolean;
-  is_active: boolean;
-  type: string;
-}
+import ICoinPrice from "../../interface/ICoinPrice";
 
 const PriceTab = () => {
   const { coinId } = useParams();
@@ -31,17 +20,19 @@ const PriceTab = () => {
       ) : (
         <ReactApexChart
           type="candlestick"
-          series= {[
-           {
-            name: "data",
-            data: data? data.map((price) => [
-              price.time_open, 
-              parseFloat(price.open),
-              parseFloat(price.high),
-              parseFloat(price.low),
-              parseFloat(price.close)
-            ]) : [],
-           }
+          series={[
+            {
+              name: "data",
+              data: data
+                ? data.map((price) => [
+                    price.time_open,
+                    parseFloat(price.open),
+                    parseFloat(price.high),
+                    parseFloat(price.low),
+                    parseFloat(price.close),
+                  ])
+                : [],
+            },
           ]}
           options={{
             chart: {
@@ -51,17 +42,17 @@ const PriceTab = () => {
               //toolbar: { show: false },
               animations: {
                 enabled: true,
-                easing: 'easeinout',
+                easing: "easeinout",
                 speed: 800,
                 animateGradually: {
-                    enabled: true,
-                    delay: 150
+                  enabled: true,
+                  delay: 150,
                 },
                 dynamicAnimation: {
-                    enabled: true,
-                    speed: 350
-                }
-            }
+                  enabled: true,
+                  speed: 350,
+                },
+              },
             },
             xaxis: {
               categories: data?.map((price) => price.time_close),
@@ -73,8 +64,7 @@ const PriceTab = () => {
             colors: ["#ff7b4f"],
             stroke: {
               curve: "smooth",
-            }
-            
+            },
           }}
         />
       )}

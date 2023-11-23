@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { isDarkAtom } from "../atom";
+import { isDarkAtom } from "../recoil/atom";
 
 const Navi = styled.nav`
+  display: block;
   position: fixed;
   z-index: 100;
   top: 0px;
@@ -39,12 +40,12 @@ const Toggle = styled.button`
 `;
 
 const Nav = () => {
-  const isDarkTheme = useRecoilValue(isDarkAtom);
-  const setDarkTheme = useSetRecoilState(isDarkAtom);
+  const [isDarkTheme, setDarkTheme] = useRecoilState(isDarkAtom);
   const toggleTheme = () => setDarkTheme((prev) => !prev);
   return (
     <Navi>
       <Link to="/">Coins</Link>
+      <Link to="/todo">To Do</Link>
       <Toggle onClick={toggleTheme}>
         {isDarkTheme ? "Light Mode" : "Dark Mode"}
       </Toggle>

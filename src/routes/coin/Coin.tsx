@@ -1,10 +1,9 @@
-
 import { Outlet, useMatch, useParams } from "react-router-dom";
 import styled from "styled-components";
-import LoadingAnimation from "../components/LoadingAnimation";
+import LoadingAnimation from "../../components/LoadingAnimation";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
-import { fetchCoinInfo, fetchCoinPrice } from "../api/api";
+import { fetchCoinInfo, fetchCoinPrice } from "../../api/api";
 import { Helmet } from "react-helmet";
 
 const Container = styled.div`
@@ -101,18 +100,19 @@ const Coin = () => {
   const isChartTap = useMatch("/:coinId/chart");
   const isPriceTap = useMatch("/:coinId/price");
 
-  const { isLoading: isLoadingInfo, data: infoData, error: infoError} = useQuery(
-    ["fetchCoinInfo", coinId],
-    () => fetchCoinInfo(coinId)
-  );
+  const {
+    isLoading: isLoadingInfo,
+    data: infoData,
+    error: infoError,
+  } = useQuery(["fetchCoinInfo", coinId], () => fetchCoinInfo(coinId));
 
-  const { isLoading: isLoadingPrice, data: priceData, error: priceError } = useQuery(
-    ["fetchCoinPrice", coinId],
-    () => fetchCoinPrice(coinId),
-    {
-      //refetchInterval: 5000,
-    }
-  );
+  const {
+    isLoading: isLoadingPrice,
+    data: priceData,
+    error: priceError,
+  } = useQuery(["fetchCoinPrice", coinId], () => fetchCoinPrice(coinId), {
+    //refetchInterval: 5000,
+  });
 
   const OverviewPriceItems: string[] = ["open", "close", "high", "low"];
 

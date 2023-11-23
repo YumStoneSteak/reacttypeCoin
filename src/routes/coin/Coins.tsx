@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styled, { css, keyframes } from "styled-components";
-import LoadingAnimation from "../components/LoadingAnimation";
+import styled, { css } from "styled-components";
+import LoadingAnimation from "../../components/LoadingAnimation";
 import { useQuery } from "react-query";
-import { fetchAllCoins } from "../api/api";
+import { fetchAllCoins } from "../../api/api";
 import { Helmet } from "react-helmet";
-import { fadeIn } from "../style/GlobalStyleComponents";
-
-const Container = styled.div`
-  max-width: 700px;
-  margin: 50px auto 0px auto;
-  padding: 0px 10px;
-`;
+import { Container, fadeIn } from "../../style/GlobalStyleComponents";
 
 const Header = styled.header`
   display: flex;

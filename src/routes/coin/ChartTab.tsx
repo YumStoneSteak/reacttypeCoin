@@ -1,11 +1,11 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { fetchCoinPrice } from "../api/api";
+import { fetchCoinPrice } from "../../api/api";
 import ReactApexChart from "react-apexcharts";
 import { useParams } from "react-router-dom";
-import ICoinPrice from "../interface/ICoinPrice";
+import ICoinPrice from "../../interface/ICoinPrice";
 import { useRecoilValue } from "recoil";
-import { isDarkAtom } from "../atom";
+import { isDarkAtom } from "../../recoil/atom";
 
 const ChartTab = () => {
   const { coinId } = useParams();

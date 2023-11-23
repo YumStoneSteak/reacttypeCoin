@@ -1,5 +1,4 @@
 import { createGlobalStyle, css } from "styled-components";
-import { fadeIn } from "./GlobalStyleComponents";
 
 export const reset = css`
   /* http://meyerweb.com/eric/tools/css/reset/

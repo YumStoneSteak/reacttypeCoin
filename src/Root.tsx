@@ -5,7 +5,7 @@ import { lightTheme, darkTheme } from "./style/theme";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./style/GlobalStyle";
 import { useRecoilValue } from "recoil";
-import { isDarkAtom } from "./atom";
+import { isDarkAtom } from "./recoil/atom";
 
 function Root() {
   const isDarkMode = useRecoilValue(isDarkAtom);

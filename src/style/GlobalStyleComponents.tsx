@@ -1,5 +1,5 @@
 import React from "react";
-import { keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const fadeIn = () => keyframes`
   0% {
@@ -8,6 +8,12 @@ export const fadeIn = () => keyframes`
   100% {
     opacity: 1;
   }
+`;
+
+export const Container = styled.div`
+  max-width: 700px;
+  margin: 50px auto 0px auto;
+  padding: 0px 10px;
 `;
 
 const GlobalStyleComponents = () => {
