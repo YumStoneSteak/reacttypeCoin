@@ -28,6 +28,10 @@ const Toggle = styled.button`
   border-radius: 10px;
   float: right;
   margin-right: 20px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: ${(props) => props.theme.bgColor};
+  vertical-align: center;
 
   &:hover {
     cursor: grab;
