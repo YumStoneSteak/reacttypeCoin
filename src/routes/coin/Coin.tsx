@@ -5,23 +5,13 @@ import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinPrice } from "../../api/api";
 import { Helmet } from "react-helmet";
-
-const Container = styled.div`
-  max-width: 700px;
-  margin: 50px auto 0px auto;
-  padding: 0px 10px;
-`;
+import { Container, Title } from "../../style/GlobalStyleComponents";
 
 const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 15vh;
-`;
-
-const Title = styled.h1`
-  color: ${(props) => props.theme.accentColor};
-  font-size: 48px;
 `;
 
 const Img = styled.img`

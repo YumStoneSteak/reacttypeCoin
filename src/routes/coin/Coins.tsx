@@ -5,20 +5,12 @@ import LoadingAnimation from "../../components/LoadingAnimation";
 import { useQuery } from "react-query";
 import { fetchAllCoins } from "../../api/api";
 import { Helmet } from "react-helmet";
-import { Container, fadeIn } from "../../style/GlobalStyleComponents";
-
-const Header = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 15vh;
-`;
-
-const Title = styled.h1`
-  color: ${(props) => props.theme.accentColor};
-  font-size: 48px;
-  font-weight: bold;
-`;
+import {
+  Container,
+  Header,
+  Title,
+  fadeIn,
+} from "../../style/GlobalStyleComponents";
 
 const CoinsList = styled.ul`
   list-style-type: none;

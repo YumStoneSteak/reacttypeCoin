@@ -12,12 +12,12 @@ const ToDo = () => {
         const { text, id, category } = toDo;
         return (
           <li key={id}>
-            {text}
+            {/* {text}
             {Object.keys(categoryLabels)
               .filter((catKey) => catKey !== category) // Filter out the current category.
               .map((catKey) => (
                 <button key={catKey}>{categoryLabels[catKey]}</button> // Use the label from categoryLabels.
-              ))}
+              ))} */}
           </li>
         );
       })}

@@ -12,8 +12,20 @@ export const fadeIn = () => keyframes`
 
 export const Container = styled.div`
   max-width: 700px;
-  margin: 50px auto 0px auto;
-  padding: 0px 10px;
+  margin: 0px auto 0px auto;
+`;
+
+export const Header = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 15vh;
+`;
+
+export const Title = styled.h1`
+  color: ${(props) => props.theme.accentColor};
+  font-size: 48px;
+  font-weight: bold;
 `;
 
 const GlobalStyleComponents = () => {

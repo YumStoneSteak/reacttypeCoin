@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Nav from "./components/Nav";
+import Nav, { NavMargin } from "./components/Nav";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { lightTheme, darkTheme } from "./style/theme";
 import { ThemeProvider } from "styled-components";
@@ -14,6 +14,7 @@ function Root() {
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <GlobalStyle />
         <Nav />
+        <NavMargin />
         <Outlet />
       </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={true} />
