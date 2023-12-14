@@ -125,6 +125,9 @@ export const reset = css`
     color: ${(props) => props.theme.textColor};
     line-height: 1;
     transition: background-color 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
   }
 
   menu ol,

@@ -1,19 +1,18 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { toDoState } from "../../recoil/atom";
 import { useForm } from "react-hook-form";
-import { IForm } from "../../interface/ItoDo";
-
+import IToDo, { IToDoForm } from "../../interface/IToDo";
 
 const CreateToDo = () => {
   const setToDos = useSetRecoilState(toDoState);
-  const { register, watch, handleSubmit, setValue } = useForm<IForm>();
+  const { register, watch, handleSubmit, setValue } = useForm<IToDoForm>();
 
-  const onSubmit = ({ toDo }: IForm) => {
+  const onSubmit = ({ toDo }: any) => {
     setToDos((prev) => [
       { text: toDo, id: Date.now(), category: "TO_DO" },
       ...prev,
     ]);
-    setValue("toDo", "");
+    setValue(toDo, "");
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

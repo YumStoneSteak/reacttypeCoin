@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import IForm from "../../interface/IForm";
+import { useState } from "react";
+import IForm from "../../interface/ILoginForm";
 import { useForm, useWatch } from "react-hook-form";
 import styled from "styled-components";
 import { Header, Title } from "../../style/GlobalStyleComponents";
@@ -24,16 +24,11 @@ const SignUp = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
     getValues,
     reset,
     control,
   } = useForm<IForm>({});
   const [isLogined, setIsLogined] = useState("not Logined");
-  useEffect(() => {
-    reset();
-    console.log('getValues("email")', getValues("email"));
-  }, []);
 
   const onValid = (data: IForm) => {
     console.log("login!", data);

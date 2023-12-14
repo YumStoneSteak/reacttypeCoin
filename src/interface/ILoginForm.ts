@@ -1,4 +1,4 @@
-export default interface IForm {
+export default interface ILoginForm {
   email: string;
   firstName?: string;
   lastName?: string;
