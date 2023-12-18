@@ -1,23 +1,15 @@
 import { useState } from "react";
-import IForm from "../../interface/ILoginForm";
+import IForm, { emailRegex } from "../../interface/ILoginForm";
 import { useForm, useWatch } from "react-hook-form";
-import styled from "styled-components";
-import { Header, Title } from "../../style/GlobalStyleComponents";
 import {
-  FormContainer,
+  FormButton,
+  FormButtonContainer,
+  Header,
   InputBox,
-  emailRegex,
-} from "../../style/sign/SignStyleComponents";
-
-const FormButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-
-  button {
-    width: 130px;
-  }
-`;
+  LoginFormContainer,
+  Title,
+} from "../../style/GlobalStyleComponents";
+import { Helmet } from "react-helmet";
 
 const SignUp = () => {
   const {
@@ -34,14 +26,23 @@ const SignUp = () => {
     console.log("login!", data);
     setIsLogined("Logined");
   };
+
+  const onReset = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    reset();
+  };
+
   console.log("!!errors.email", !!errors.email);
   return (
     <>
+      <Helmet>
+        <title>Sign Up</title>
+      </Helmet>
       <Header>
         <Title>Sign UP!</Title>
       </Header>
 
-      <FormContainer
+      <LoginFormContainer
         style={{ display: "flex", flexDirection: "column" }}
         onSubmit={handleSubmit(onValid)}
       >
@@ -57,9 +58,9 @@ const SignUp = () => {
                 message: "not Email form",
               },
             })}
-            id="Email"
+            id="email"
           />
-          <label htmlFor="Email">Email</label>
+          <label htmlFor="email">Email</label>
           <span>{errors?.email?.message}</span>
         </InputBox>
         <InputBox
@@ -133,19 +134,12 @@ const SignUp = () => {
           <span>{errors?.passwordConfirm?.message}</span>
         </InputBox>
         <FormButtonContainer>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              reset();
-            }}
-          >
-            Reset
-          </button>
-          <button>Sign Up!</button>
+          <FormButton onClick={onReset}>Reset</FormButton>
+          <FormButton>Sign Up</FormButton>
         </FormButtonContainer>
         <span>{errors?.extraError?.message}</span>
         <span>{isLogined}</span>
-      </FormContainer>
+      </LoginFormContainer>
     </>
   );
 };

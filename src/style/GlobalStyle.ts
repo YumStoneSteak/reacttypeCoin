@@ -130,6 +130,11 @@ export const reset = css`
     -webkit-font-smoothing: antialiased !important;
   }
 
+  a,
+  button {
+    transition: all 100ms ease;
+  }
+
   menu ol,
   ul {
     list-style: none;

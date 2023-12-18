@@ -6,6 +6,7 @@ export const lightTheme: DefaultTheme = {
   bgAccentColor: "#ffddc1",
   accentColor: "#FF9130",
   warnRed: "rgb(217,48,37)",
+  btnColor: "#fceadfac",
 };
 
 export const darkTheme: DefaultTheme = {
@@ -14,4 +15,5 @@ export const darkTheme: DefaultTheme = {
   bgAccentColor: "rgb(59, 59, 59)",
   accentColor: "#ff7b4f",
   warnRed: "rgb(217,48,37)",
+  btnColor: "rgba(70, 70, 70, 0.493)",
 };

@@ -5,49 +5,15 @@ import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinPrice } from "../../api/api";
 import { Helmet } from "react-helmet";
-import { Container, Title } from "../../style/GlobalStyleComponents";
-
-const Header = styled.header`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 15vh;
-`;
-
-const Img = styled.img`
-  width: 35px;
-  height: 35px;
-  margin: 0px 10px;
-`;
-
-const Overview = styled.div`
-  display: flex;
-  justify-content: space-between;
-  background-color: ${(props) => props.theme.bgAccentColor};
-  padding: 10px 20px;
-  border-radius: 10px;
-`;
-
-const OverviewItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 25px;
-
-  span:first-child {
-    margin-bottom: 5px;
-    font-size: 15px;
-    font-weight: 400;
-    text-transform: uppercase;
-  }
-`;
-
-const Description = styled.p`
-  margin: 20px 0px;
-  background-color: ${(props) => props.theme.bgAccentColor};
-  padding: 20px 20px;
-  border-radius: 10px;
-`;
+import {
+  Container,
+  Description,
+  Header,
+  Img,
+  Overview,
+  OverviewItem,
+  Title,
+} from "../../style/GlobalStyleComponents";
 
 const Tabs = styled.div`
   display: flex;

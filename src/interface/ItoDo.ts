@@ -1,6 +1,6 @@
 export default interface IToDo {
-  id: number;
   text: string;
+  id: number;
   category: "TO_DO" | "DOING" | "DONE";
 }
 

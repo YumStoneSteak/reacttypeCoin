@@ -1,24 +1,16 @@
 import { useForm, useWatch } from "react-hook-form";
-import IForm from "../../interface/ILoginForm";
+import IForm, { emailRegex } from "../../interface/ILoginForm";
 import { useState } from "react";
-import { Header, Title } from "../../style/GlobalStyleComponents";
 import {
-  FormContainer,
+  FormButton,
+  FormButtonContainer,
+  Header,
   InputBox,
-  emailRegex,
-} from "../../style/sign/SignStyleComponents";
+  LoginFormContainer,
+  Title,
+} from "../../style/GlobalStyleComponents";
 import styled from "styled-components";
-
-const FormButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  button {
-    width: 130px;
-    font-size: 1.05rem;
-  }
-`;
+import { Helmet } from "react-helmet";
 
 const ForgotPassword = styled.div`
   margin: 10px 0px;
@@ -42,10 +34,13 @@ const SignIn = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Sign In</title>
+      </Helmet>
       <Header>
         <Title>Sign In!</Title>
       </Header>
-      <FormContainer
+      <LoginFormContainer
         style={{ display: "flex", flexDirection: "column" }}
         onSubmit={handleSubmit(onValid)}
       >
@@ -87,11 +82,11 @@ const SignIn = () => {
           <a href="findAccount">Forgot your Account?</a>
         </ForgotPassword>
         <FormButtonContainer>
-          <button>Sign In</button>
+          <FormButton>Sign In</FormButton>
         </FormButtonContainer>
         <span>{errors?.extraError?.message}</span>
         <span>{isLogined}</span>
-      </FormContainer>
+      </LoginFormContainer>
     </>
   );
 };

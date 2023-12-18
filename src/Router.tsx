@@ -5,9 +5,9 @@ import Coin from "./routes/coin/Coin";
 import Chart from "./components/coin/ChartTab";
 import Price from "./components/coin/Price";
 import NotFound from "./routes/NotFound";
-import ToDoList from "./routes/todo/ToDoContainer";
 import SignIn from "./routes/sign/SignIn";
 import SignUp from "./routes/sign/SignUp";
+import ToDo from "./routes/todo/ToDo";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: "todo/",
-        element: <ToDoList />,
+        element: <ToDo />,
       },
       {
         path: "signin/",
