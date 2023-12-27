@@ -1,10 +1,8 @@
 import CreateToDo from "../../components/todo/CreateToDo";
-import { useRecoilValue } from "recoil";
-import { toDoState } from "../../recoil/atom";
 import styled from "styled-components";
 import ToDoList from "../../components/todo/ToDoList";
 import { Helmet } from "react-helmet";
-import { Header, Overview, Title } from "../../style/GlobalStyleComponents";
+import { Header, Title } from "../../style/GlobalStyleComponents";
 
 const ToDoContainer = styled.div`
   justify-content: center;
@@ -13,20 +11,17 @@ const ToDoContainer = styled.div`
 `;
 
 const ToDo = () => {
-  const toDos = useRecoilValue(toDoState);
-  console.log("toDOs", toDos);
   return (
     <>
       <Helmet>
         <title>To Do</title>
       </Helmet>
-
       <Header>
-        <Title>To Do</Title>
+        <Title>Memo To Do</Title>
       </Header>
       <ToDoContainer>
         <CreateToDo />
-        <ToDoList toDos={toDos} />
+        <ToDoList />
       </ToDoContainer>
     </>
   );

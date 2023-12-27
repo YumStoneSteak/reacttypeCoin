@@ -21,8 +21,8 @@ export const Header = styled.header`
   height: 15vh;
 `;
 
-export const Title = styled.h1`
-  color: ${(props) => props.theme.accentColor};
+export const Title = styled.h1<{ category?: string }>`
+  color: ${(props) => backgroundColor(props)};
   font-size: 48px;
   font-weight: bold;
 `;
@@ -146,7 +146,7 @@ export const Img = styled.img`
   margin: 0px 10px;
 `;
 
-export const Overview = styled.div`
+export const Overview = styled.div<{ category?: string }>`
   display: flex;
   justify-content: space-between;
   background-color: ${(props) => props.theme.bgAccentColor};
@@ -178,3 +178,16 @@ export const Description = styled.p`
   padding: 20px 20px;
   border-radius: 10px;
 `;
+
+export const backgroundColor = (props: any) => {
+  switch (props.category) {
+    case "TO_DO":
+      return props.theme.todoColor;
+    case "DOING":
+      return props.theme.doingColor;
+    case "DONE":
+      return props.theme.doneColor;
+    default:
+      return props.theme.accentColor;
+  }
+};

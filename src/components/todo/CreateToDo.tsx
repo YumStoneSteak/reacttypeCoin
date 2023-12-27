@@ -30,6 +30,7 @@ const CreateToDo = () => {
     formState: { errors },
     control,
     reset,
+    setFocus,
   } = useForm<IToDoForm>();
 
   const onSubmit = ({ toDo }: any) => {
@@ -37,6 +38,7 @@ const CreateToDo = () => {
       { text: toDo, id: Date.now(), category: "TO_DO" },
       ...prev,
     ]);
+    setFocus("toDo");
     reset();
   };
   return (

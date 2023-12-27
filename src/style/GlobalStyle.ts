@@ -163,6 +163,33 @@ export const reset = css`
     border-collapse: collapse;
     border-spacing: 0;
   }
+  /* 스크롤 커스텀 */
+  ::-webkit-scrollbar {
+    transition: all 0.3s linear;
+  }
+  ::-webkit-scrollbar:vertical {
+    width: 4px;
+  }
+  ::-webkit-scrollbar:horizontal {
+    height: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #808080;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #404040;
+  }
+  ::-webkit-scrollbar-thumb:active {
+    background: #808080;
+  }
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
 `;
 
 export default createGlobalStyle`${reset}`;

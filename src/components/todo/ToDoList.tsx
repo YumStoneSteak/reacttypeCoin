@@ -1,44 +1,29 @@
-import styled from "styled-components";
 import IToDo from "../../interface/IToDo";
-import { Overview, OverviewItem } from "../../style/GlobalStyleComponents";
-import { useSetRecoilState } from "recoil";
-import { toDoState } from "../../recoil/atom";
+import { useRecoilValue } from "recoil";
+import { toDoSelector } from "../../recoil/atom";
+import ToDoView from "./ToDoView";
+import { Title } from "../../style/GlobalStyleComponents";
 
-const ToDoBtnContainer = styled.div``;
-const ToDoBtn = styled.button`
-  font-size: small;
-`;
+const ToDoList = () => {
+  const [toDos, Doings, Dones] = useRecoilValue(toDoSelector);
 
-const ToDoList = ({ toDos }: { toDos: IToDo[] }) => {
-  const category = { TO_DO: "To Do", DOING: "Doing", DONE: "Done" };
-  const { TO_DO, DOING, DONE } = category;
+  const sections = [
+    { title: "To Do", id: "TO_DO", items: toDos },
+    { title: "Doing", id: "DOING", items: Doings },
+    { title: "Done", id: "DONE", items: Dones },
+  ];
 
-  const setToDos = useSetRecoilState(toDoState);
-
-  const onCatBtn = () => {};
   return (
     <ul>
-      {toDos.map((toDo: IToDo) => {
-        const { text, id, category } = toDo;
-        const date = new Date(id);
-        return (
-          <Overview>
-            <OverviewItem>
-              <div>{text}</div>
-            </OverviewItem>
-            <OverviewItem>
-              <div>{date.toLocaleDateString()}</div>
-              <div>{date.toLocaleTimeString()}</div>
-              <div>{category}</div>
-              <ToDoBtnContainer>
-                <ToDoBtn onClick={onCatBtn}>{TO_DO}</ToDoBtn>
-                <ToDoBtn onClick={onCatBtn}>{DOING}</ToDoBtn>
-                <ToDoBtn onClick={onCatBtn}>{DONE}</ToDoBtn>
-              </ToDoBtnContainer>
-            </OverviewItem>
-          </Overview>
-        );
-      })}
+      {sections.map(({ title, id, items }) => (
+        <li key={id}>
+          <Title category={id}>{title}</Title>
+          <hr />
+          {items.map((item: IToDo, index) => (
+            <ToDoView key={item.id} index={index + 1} {...item} />
+          ))}
+        </li>
+      ))}
     </ul>
   );
 };
