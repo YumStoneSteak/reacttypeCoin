@@ -1,5 +1,11 @@
 import { atom, selector } from "recoil";
 import IToDo from "../interface/IToDo";
+import { ILocale } from "../interface/Icommon";
+
+export const localeState = atom<ILocale>({
+  key: "locale",
+  default: "ko",
+});
 
 export const isDarkAtom = atom({
   key: "isDarkMode",

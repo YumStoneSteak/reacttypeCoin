@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { isDarkAtom } from "../recoil/atom";
+import { isDarkAtom, localeState } from "../recoil/atom";
+import { ILocale } from "../interface/Icommon";
 
 export const NavMargin = styled.div`
   display: block;
@@ -32,28 +33,57 @@ const Navi = styled.nav`
 
 const LeftNavi = styled.div``;
 
-const RightNavi = styled.div``;
+const RightNavi = styled.div`
+  margin-right: 20px;
+`;
 
-const Toggle = styled.button`
+const ThemeToggle = styled.button`
   background-color: ${(props) => props.theme.textColor};
   color: ${(props) => props.theme.bgColor};
   height: 25px;
   border-radius: 10px;
   float: right;
-  margin-right: 20px;
-  border-width: 3px;
+  margin: 0px 8px;
+  border-width: 2px;
   border-style: solid;
   border-color: ${(props) => props.theme.bgColor};
-  vertical-align: center;
 
   &:hover {
-    cursor: grab;
+    cursor: pointer;
+  }
+`;
+
+const LocalToggle = styled.button`
+  background-color: ${(props) => props.theme.accentColor};
+  height: 25px;
+  border-radius: 10px;
+  float: right;
+  margin: 0px 8px;
+  border: none;
+  border-width: 2px;
+  border-style: solid;
+  border-color: ${(props) => props.theme.bgColor};
+
+  &:hover {
+    cursor: pointer;
   }
 `;
 
 const Nav = () => {
   const [isDarkTheme, setDarkTheme] = useRecoilState(isDarkAtom);
+  const [locale, setLocale] = useRecoilState(localeState);
+
   const toggleTheme = () => setDarkTheme((prev) => !prev);
+  const toggleLocale = () =>
+    setLocale((prev: ILocale) => {
+      switch (prev) {
+        case "ko":
+          return "en";
+        case "en":
+          return "ko";
+      }
+    });
+
   return (
     <Navi>
       <LeftNavi>
@@ -63,9 +93,12 @@ const Nav = () => {
       <RightNavi>
         <Link to="/signin">Sing In</Link>
         <Link to="/signup">Sing Up</Link>
-        <Toggle onClick={toggleTheme}>
+        <ThemeToggle onClick={toggleTheme}>
           {isDarkTheme ? "Light Mode" : "Dark Mode"}
-        </Toggle>
+        </ThemeToggle>
+        <LocalToggle onClick={toggleLocale}>
+          {locale === "ko" ? "ENG" : "KOR"}
+        </LocalToggle>
       </RightNavi>
     </Navi>
   );

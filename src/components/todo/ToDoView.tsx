@@ -3,6 +3,7 @@ import IToDo from "../../interface/IToDo";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { toDoSelector, toDoState } from "../../recoil/atom";
 import { backgroundColor } from "../../style/GlobalStyleComponents";
+import { useIntl } from "react-intl";
 
 const Overview = styled.div<{ category: string }>`
   display: flex;
@@ -56,6 +57,7 @@ const ToDoBtn = styled.button<{ category: string }>`
 `;
 
 const ToDoView = ({ text, id, category, index }: IToDo & { index: number }) => {
+  const { formatMessage: msg } = useIntl();
   const categoryId = ["TO_DO", "DOING", "DONE"];
   const catName: { [key: string]: string } = {
     TO_DO: "To Do",

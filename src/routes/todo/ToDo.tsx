@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ToDoList from "../../components/todo/ToDoList";
 import { Helmet } from "react-helmet";
 import { Header, Title } from "../../style/GlobalStyleComponents";
+import { useIntl } from "react-intl";
 
 const ToDoContainer = styled.div`
   justify-content: center;
@@ -11,13 +12,14 @@ const ToDoContainer = styled.div`
 `;
 
 const ToDo = () => {
+  const { formatMessage: msg } = useIntl();
   return (
     <>
       <Helmet>
-        <title>To Do</title>
+        <title>{msg({ id: "todo" })}</title>
       </Helmet>
       <Header>
-        <Title>Memo To Do</Title>
+        <Title>To Do</Title>
       </Header>
       <ToDoContainer>
         <CreateToDo />

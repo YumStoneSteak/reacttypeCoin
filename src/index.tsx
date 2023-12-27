@@ -5,12 +5,16 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { RouterProvider } from "react-router-dom";
 import router from "./Router";
 import { RecoilRoot } from "recoil";
+import { IntlProvider } from "react-intl";
+import { en } from "./locale/en";
+import { ko } from "./locale/ko";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
 const queryClient = new QueryClient();
+//localStorage.setItem("locale", "ko");
 
 root.render(
   <RecoilRoot>
