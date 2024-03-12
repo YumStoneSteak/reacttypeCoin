@@ -132,7 +132,7 @@ export const reset = css`
 
   a,
   button {
-    transition: all 100ms ease;
+    transition: all 0.3ms ease;
   }
 
   menu ol,

@@ -12,4 +12,6 @@ export const en = {
   todo: "To Do",
   doing: "Doing",
   done: "Done",
+  no_to_do: "Don't you have something to Do?",
+  delete: "Delete",
 };

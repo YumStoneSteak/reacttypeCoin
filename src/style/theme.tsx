@@ -1,29 +1,29 @@
 import { DefaultTheme } from "styled-components/dist/types";
 
+const commonStyles = {
+  cBorderColor: "#dadce0",
+  cWarnRed: "rgb(217,48,37)",
+  cLightColor: "whitesmoke",
+  cDarkColor: "#2f3640",
+  cTodoColor: "#ffbe89",
+  cDoingColor: "lightblue",
+  cDoneColor: "lightgreen",
+};
+
 export const lightTheme: DefaultTheme = {
+  ...commonStyles,
   textColor: "#2f3640",
   bgColor: "whitesmoke",
   bgAccentColor: "#ffddc1",
   accentColor: "#FF9130",
-  warnRed: "rgb(217,48,37)",
   btnColor: "#fceadfac",
-  lightColor: "whitesmoke",
-  darkColor: "#2f3640",
-  todoColor: "#ffbe89",
-  doingColor: "lightblue",
-  doneColor: "lightgreen",
 };
 
 export const darkTheme: DefaultTheme = {
+  ...commonStyles,
   textColor: "whitesmoke",
   bgColor: "rgb(34, 34, 34)",
   bgAccentColor: "rgb(59, 59, 59)",
   accentColor: "#ff7b4f",
-  warnRed: "rgb(217,48,37)",
   btnColor: "rgba(70, 70, 70, 0.493)",
-  lightColor: "whitesmoke",
-  darkColor: "#2f3640",
-  todoColor: "#ffbe89",
-  doingColor: "lightblue",
-  doneColor: "lightgreen",
 };

@@ -12,4 +12,6 @@ export const ko = {
   todo: "할 일",
   doing: "하는 중",
   done: "완료",
+  no_to_do: "할 일을 입력해주세요!",
+  delete: "삭제",
 };

@@ -32,7 +32,7 @@ export const LoginFormContainer = styled.form`
   max-width: 400px;
   margin: auto;
   padding: 40px 50px;
-  border: 2px solid #dadce0;
+  border: 2px solid ${(props) => props.theme.cBorderColor};
   border-radius: 4px;
 
   span {
@@ -51,7 +51,7 @@ export const FormButtonContainer = styled.div`
 export const FormButton = styled.button`
   padding: 15px 20px;
   margin: 10px;
-  border: 2px solid #dadce0;
+  border: 2px solid ${(props) => props.theme.cBorderColor};
   border-radius: 4px;
   font-size: 1.05rem;
   color: ${(props) => props.theme.textColor};
@@ -75,29 +75,29 @@ export const InputBox = styled.div<{ hasContent?: boolean; error?: boolean }>`
   input {
     box-sizing: border-box;
     width: 100%;
-    border: 2px solid #dadce0;
+    border: 2px solid ${(props) => props.theme.cBorderColor};
     border-radius: 4px;
     padding: 10px;
-    margin: 10px 10px 5px 10px;
+    margin: 10px;
     background-color: ${(props) => props.theme.bgColor};
     color: ${(props) => props.theme.textColor};
-    transition: all 300ms ease;
+    transition: all 0.3ms ease;
 
     ${(props) =>
       props.error &&
       `
       outline: none;
-      border-color: ${props.theme.warnRed};
-      box-shadow: 0 0 5px ${props.theme.warnRed};
+      border-color: ${props.theme.cWarnRed};
+      box-shadow: 0 0 5px ${props.theme.cWarnRed};
     `}
 
     &:focus {
       outline: none;
       border-color: ${(props) =>
-        props.error ? props.theme.warnRed : props.theme.accentColor};
+        props.error ? props.theme.cWarnRed : props.theme.accentColor};
       box-shadow: 0 0 5px
         ${(props) =>
-          props.error ? props.theme.warnRed : props.theme.accentColor};
+          props.error ? props.theme.cWarnRed : props.theme.accentColor};
     }
     &:focus + label {
       color: ${(props) => props.theme.accentColor};
@@ -118,10 +118,16 @@ export const InputBox = styled.div<{ hasContent?: boolean; error?: boolean }>`
     font-size: 14px;
     font-weight: normal;
     text-align: center;
-    transition: all 0.7s cubic-bezier(0.33, 1, 0.68, 1);
-    transition: transform 0.2s ease;
+    color: ${(props) => props.theme.cBorderColor};
     background-color: ${(props) => props.theme.bgColor};
+    transition: transform 0.2s ease;
     transform: translate(10px, 20px);
+
+    ${(props) =>
+      !props.error &&
+      `
+      display:none;
+    `}
 
     ${(props) =>
       props.hasContent &&
@@ -136,7 +142,7 @@ export const InputBox = styled.div<{ hasContent?: boolean; error?: boolean }>`
     height: 16px;
     margin-bottom: 5px;
     font-size: 0.9rem;
-    color: ${(props) => props.theme.warnRed};
+    color: ${(props) => props.theme.cWarnRed};
   }
 `;
 
@@ -182,11 +188,11 @@ export const Description = styled.p`
 export const backgroundColor = (props: any) => {
   switch (props.category) {
     case "TO_DO":
-      return props.theme.todoColor;
+      return props.theme.cTodoColor;
     case "DOING":
-      return props.theme.doingColor;
+      return props.theme.cDoingColor;
     case "DONE":
-      return props.theme.doneColor;
+      return props.theme.cDoneColor;
     default:
       return props.theme.accentColor;
   }

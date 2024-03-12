@@ -1,7 +1,9 @@
+export type categories = "TO_DO" | "DOING" | "DONE";
+
 export default interface IToDo {
   text: string;
   id: number;
-  category: "TO_DO" | "DOING" | "DONE";
+  category: categories;
 }
 
 export interface IToDoForm {
