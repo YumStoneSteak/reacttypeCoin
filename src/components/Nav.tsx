@@ -89,6 +89,7 @@ const Nav = () => {
       <LeftNavi>
         <Link to="/">Coins</Link>
         <Link to="/todo">To Do</Link>
+        <Link to="/memo">Memo</Link>
       </LeftNavi>
       <RightNavi>
         <Link to="/signin">Sing In</Link>

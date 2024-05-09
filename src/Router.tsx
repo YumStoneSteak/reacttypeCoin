@@ -8,6 +8,7 @@ import NotFound from "./routes/NotFound";
 import SignIn from "./routes/sign/SignIn";
 import SignUp from "./routes/sign/SignUp";
 import ToDo from "./routes/todo/ToDo";
+import Memo from "./routes/Memo/Memo";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "todo/",
         element: <ToDo />,
+      },
+      {
+        path: "memo/",
+        element: <Memo />,
       },
       {
         path: "signin/",

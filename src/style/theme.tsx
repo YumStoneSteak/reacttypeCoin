@@ -1,6 +1,7 @@
 import { DefaultTheme } from "styled-components/dist/types";
 
 const commonStyles = {
+  black: "black",
   cBorderColor: "#dadce0",
   cWarnRed: "rgb(217,48,37)",
   cLightColor: "whitesmoke",

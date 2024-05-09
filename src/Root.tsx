@@ -19,10 +19,9 @@ function Root() {
     const userLocale = navigator.language.substring(0, 2) ?? "ko";
 
     setLocale(userLocale as ILocale);
-    console.log("first locale", locale);
   }, []);
 
-  const messages = { en: en, ko: ko }[locale];
+  const messages = { en, ko }[locale];
 
   return (
     <IntlProvider locale={locale} messages={messages}>

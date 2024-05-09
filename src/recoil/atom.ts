@@ -1,6 +1,7 @@
 import { atom, selector } from "recoil";
 import IToDo, { categories } from "../interface/IToDo";
 import { ILocale } from "../interface/Icommon";
+import { IMemo } from "../interface/IMemo";
 
 const localStorageEffect =
   (key: string) =>
@@ -49,4 +50,15 @@ export const toDoSelector = selector({
       toDos.filter((toDo) => toDo.category === "DONE"),
     ];
   },
+});
+
+export const memoState = atom<IMemo[]>({
+  key: "memo",
+  default: {
+    Default: ["go work", "go home", "love"],
+    School: ["study hard", "go learn"],
+    Work: ["Thinclient", "LG ConnectedCare", "KI bizmeka Crawling"],
+    Home: ["sleep", "rest", "watch moive"],
+  },
+  effects: [localStorageEffect("memo")],
 });
